@@ -1,0 +1,26 @@
+Evaluate deduplication scripts
+
+- The evaluation data can be found in the directory data :
+    + data/data.ref.xml : XML dump of a reference database (each document has a unique id in <article>)
+    + data/data.col.xml : documents collected in XML collect log like format (each document has a unique id in <id>)
+    + data/rules.json : defines the expected deduplication results
+
+Evaluation script
+#################
+Test deduplication for a given ref. database (amiei_tempdb):
+
+/opt/albert/bin/albScript -f evaluate.js +b amiei_tempdb +c data/data.col.xml +r data/rules.json
+
+Test the whole process from scratch (clear ref. database, feed it with ref documents and evaluate):
+./evaluate.sh
+
+Extend the evaluation dataset with  new reference urls and/or collected urls
+############################################################################
+1- Use the script buildref.js :
+/opt/albert/bin/albScript -f buildref.js +r new_refs_urls.csv +c new_col_urls.csv +u new_rules_file.json +o data/
+
+new_refs_urls.csv and new_col_urls.csv must contain lines formatted as follows:
+unique_url_id,url_value
+
+2- Update the expected results file (data/rules.json) accordingly
+
